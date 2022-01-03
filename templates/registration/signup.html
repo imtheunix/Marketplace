@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="mx-auto items-center align-center">
+    <div>
+      <a href="/" class="flex title-font font-medium items-center text-gray-900 invisible md:visible">
+      <svg xmlns="http://www.w3.org/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="w-10 h-10 text-white p-2 bg-blue-600 rounded-full" viewBox="2 6 20 5">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      <span class="ml-3 text-xl">BusuTBM</span>
+      </a>
+      <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        Crie uma conta, explore robôs.
+      </h2>
+    </div>
+    <form class="mt-8 space-y-6" action="#" method="POST">
+      <input type="hidden" name="remember" value="true">
+      <div class="rounded-md shadow-sm">
+      {% csrf_token %}
+        <div class="mb-2">
+          <label for="email-address" class="sr-only">Usuário</label>
+          <input id="email-address" name="username" type="username" autocomplete="email" required class="appearance-none rounded-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Usuário">
+        </div>
+        <div class="mb-2">
+          <label for="email-address" class="sr-only">Email</label>
+          <input id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Email">
+        </div>
+        <div class="mb-2">
+          <label for="password1" class="sr-only">Senha</label>
+          <input id="password1" name="password1" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Senha">
+        </div>
+        <div class="mb-2">
+          <label for="password2" class="sr-only">Confirmar</label>
+          <input id="password2" name="password2" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" placeholder="Confirmar senha">
+        </div>
+      </div>
+      <div>
+        <button type="submit" class="group relative w-full flex justify-center mb-4 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+            <svg class="h-5 w-5 text-blue-500 group-hover:text-indigo-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+            </svg>
+          </span>
+          Criar
+        </button>
+        <a href="{% url 'login' %}" class="text-indigo-400 hover:text-indigo-600 no-underline ...">Já tenho uma conta...</a>
+      </div>
+<script>
+    window.onscroll = function () { window.scrollTo(0, 0); };
+</script>
+
+{% if form.errors %}
+
+	<div id="errors">
+		<div class="inner">
+			<p>Corrija os seguintes erros</p><br>
+			{{ form.non_field_errors }}
+			<ul>
+				{% for field in form %}
+					{% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+
+{% endif %}
+
+    </form>
+  </div>
+</div>
+
+
+{% endblock content %}

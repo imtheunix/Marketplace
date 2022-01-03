@@ -1,0 +1,1 @@
+Olá, bem-vindo ao meu projeto de Marketplace usando Django, sinta-se a vontade para usar meu código, caso queira compartilhar seu projeto, não pense duas vezes em me chamar.

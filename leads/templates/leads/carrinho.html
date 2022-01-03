@@ -1,0 +1,196 @@
+{% extends "base.html" %} {% block content %}
+
+<section class="text-gray-600 body-font overflow-hidden">
+  <div class="container mx-auto mt-16">
+    <div class="flex shadow-md my-10">
+      <div class="w-3/4 bg-white px-10 py-10">
+        <div class="flex justify-between border-b pb-8">
+          <h1 class="font-semibold text-2xl">Carrinho</h1>
+          <h2 class="font-semibold text-2xl"></h2>
+        </div>
+        <div class="flex mt-10 mb-5 mx-auto">
+          <h3 class="font-semibold text-gray-600 text-xs uppercase w-1/4 ml-12">
+            Item
+          </h3>
+          <h3
+            class="
+              font-semibold
+              text-center text-gray-600 text-xs
+              uppercase
+              w-1/5
+              text-center
+            "
+          >
+            Quantidade
+          </h3>
+          <h3
+            class="
+              font-semibold
+              text-center text-gray-600 text-xs
+              uppercase
+              w-1/5
+              text-center
+            "
+          >
+            Preço
+          </h3>
+          <h3
+            class="
+              font-semibold
+              text-center text-gray-600 text-xs
+              uppercase
+              w-1/5
+              text-center
+            "
+          >
+            Total
+          </h3>
+        </div>
+        {% for order_item in object.items.all %}
+        <div class="flex items-center hover:bg-gray-200 -mx-8 px-6 py-5 border-gray-300">
+          <a href="{% url 'leads:lead-detail' order_item.item.pk%}">
+            <div class="lg:w-1/4 md:w-1/4 w-full">
+              <div class="inline-flex block h-52 w-full rounded overflow-hidden shadow-xl border-gray-300 border-4">
+                {% load static %}
+                {% if order_item.item.robopic == '' %}
+                <svg xmlns="http://www.w3.org/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" class="object-cover object-center w-full h-full block text-white" style="background-color: #67EF;" viewBox="-8 0 40 20">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM-0 0-0 0 0-0M2 12l10 5 10-5 {{ svg }}"></path>
+                </svg>
+                {% else %}
+                <img
+                  class="w-full"
+                  src="/media/{{ order_item.item.robopic }}"
+                  alt=""
+                />
+                {% endif %}
+              </div>
+
+              <div class="flex flex-col justify-between flex-grow mt-2">
+                <p>Nome:</p>
+                <span class="font-bold text-2xl"
+                  >{{ order_item.item.nome }} <br></span
+                >
+                <p>Descrição:</p>
+                <span class="text-gray-500 text-lg"
+                  >{{ order_item.item.descricao }}</span
+                >
+                <a
+                  href="{% url 'leads:remove-from-cart' order_item.item.slug %}"
+                  class="mt-4 font-semibold hover:text-red-700 text-gray-500 text-xl"
+                  >Remover</a
+                >
+              </div>
+            </div>
+          </a>
+
+          <div class="flex justify-end w-1/5 ml-12 px-12 mb-12 pb-4">
+            <a
+              href="{% url 'leads:remove-single-item-from-cart' order_item.item.slug %}"
+            >
+              <svg
+                class="fill-current text-gray-600 w-6 mr-2 hover:text-red-600"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                />
+              </svg>
+            </a>
+
+            <input readonly
+              class="mx-2 border text-center w-8 bg-gray-200"
+              type="text"
+              value="{{ order_item.quantidade }}"
+            />
+            <a href="{% url 'leads:add-to-cart' order_item.item.slug %}">
+              <svg
+                class="fill-current text-gray-600 ml-2 w-5 mt-0.5 hover:text-blue-600"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                />
+              </svg>
+            </a>
+          </div>
+          <span class="mb-12 pb-6 text-center w-1/5 font-semibold text-sm"
+            >{{ order_item.item.preco }}</span
+          >
+          <span class="mb-12 pb-6 text-center w-1/5 font-semibold text-sm"
+            >{{ order_item.get_total_item_price }}</span
+          >
+        </div>
+        {% endfor %}
+
+        <a
+          href="{% url 'leads:mercado'%}"
+          class="flex font-semibold text-blue-600 text-sm mt-10"
+        >
+          <svg
+            class="fill-current mr-2 text-blue-600 w-4"
+            viewBox="0 0 448 512"
+          >
+            <path
+              d="M134.059 296H436c6.627 0 12-5.373 12-12v-56c0-6.627-5.373-12-12-12H134.059v-46.059c0-21.382-25.851-32.09-40.971-16.971L7.029 239.029c-9.373 9.373-9.373 24.569 0 33.941l86.059 86.059c15.119 15.119 40.971 4.411 40.971-16.971V296z"
+            />
+          </svg>
+          Ver mais produtos
+        </a>
+      </div>
+
+      <div id="summary" class="lg:fixed overflow right-6 w-1/4 px-8 py-10">
+        <h1 class="font-semibold text-2xl border-b pb-2">Sumário</h1>
+        <div></div>
+        <div class="py-2">
+          <label
+            for="promo"
+            class="font-semibold inline-block mb-3 text-sm uppercase"
+            >Código de promoção</label
+          >
+          <input
+            type="text"
+            id="promo"
+            placeholder="Coloque seu código"
+            class="p-4 mb-2 text-sm w-full border-gray-300 border-2 shadow-xl"
+          />
+        </div>
+        <button
+          class="
+            bg-blue-400
+            hover:bg-blue-500
+            px-5
+            py-2
+            text-sm text-white
+            uppercase
+          "
+        >
+          Aplicar
+        </button>
+        <div class="border-t mt-8">
+          <div
+            class="flex font-semibold justify-between py-6 text-sm uppercase"
+          >
+            <span>Total</span>
+            <span>{{ object.get_total }} Nano</span>
+          </div>
+          <a href="{% url 'leads:pagamento' %}">
+            <button
+              class="
+                bg-blue-500
+                font-semibold
+                hover:bg-blue-600
+                py-3
+                text-sm text-white
+                uppercase
+                w-full
+              "
+            >
+              Finalizar
+            </button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

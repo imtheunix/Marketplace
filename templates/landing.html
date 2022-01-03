@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section  class="py-8 text-gray-600 body-font h-screen w-screen ">
+  <div class="container mx-auto flex px-5 py-20 items-center justify-center flex-col">
+    <svg class="mb-14" xmlns="http://www.w3.org/2000/svg" width="150" height="100" viewBox="0 0 24 24"><path d="M2.479 18c.978 0 1.309-.524 1.708-.922.813-.816 1.813-.469 1.813.847v6.075h6.075c1.315 0 1.663-1 .847-1.813-.398-.399-.922-.73-.922-1.708 0-1.087 1.108-2.479 3-2.479s3 1.392 3 2.479c0 .978-.524 1.309-.922 1.708-.816.813-.469 1.813.847 1.813h6.075v-6.075c0-1.315-1-1.663-1.813-.847-.399.398-.73.922-1.708.922-1.087 0-2.479-1.108-2.479-3s1.392-3 2.479-3c.978 0 1.309.524 1.708.922.813.816 1.813.469 1.813-.847v-6.075h-6.075c-1.315 0-1.663-1-.847-1.813.398-.399.922-.73.922-1.708 0-1.087-1.108-2.479-3-2.479s-3 1.392-3 2.479c0 .978.524 1.309.922 1.708.816.813.469 1.813-.847 1.813h-6.075v6.075c0 1.315-1 1.663-1.813.847-.399-.398-.73-.922-1.708-.922-1.087 0-2.479 1.108-2.479 3s1.392 3 2.479 3z"/><rect width="6" height="8" x="12" y="5"><animate attributeName="y" values="18;14;8;8;14;18" dur="8s" repeatCount="indefinite"/></rect><rect width="6" height="6" x="5" y="12"><animate attributeName="x" values="18;18;18;18;14;6;6;6;6;14;18" dur="8s" repeatCount="indefinite"/></rect></svg>
+    <div class="text-center lg:w-2/3 w-full h-screen py-6">
+      <h1 class="title-font sm:text-4xl text-4xl mb-12 font-medium text-blue-600">Afinal, o que é BusuTBM?</h1>
+      <div class="relative">
+        <p class="title-font sm:text-lg text-lg font-medium text-gray-600 mb-3"><span class="text-blue-600">BusuTBM</span> é uma plataforma de mercado para negociação de <span class="text-blue-600">robôs </span>automatizados para <span class="text-blue-600">trading</span>, crie uma conta e explore máquinas criadas por outros usuários. Todos os códigos são <span class="text-blue-600">auditados</span> antes de serem catalogados. A <span class="text-blue-600">qualidade e relevância</span> do seu anúncio será determinada pela classificação de 1 a 5 estrelas feita pelo comprador.
+      </div>
+      <div class="flex justify-center">
+        <a href="{% url 'signup' %}"><button class="inline-flex text-gray-100 bg-blue-600 border-0 py-2 px-6 focus:outline-none hover:bg-blue-700 rounded text-lg">Começar</button></a>
+        <a href="#s2"><button data-button='s2' onclick="seguro();" class="sec-btn ml-5 inline-flex text-gray-700 bg-gray-300 border-0 py-2 px-6 focus:outline-1 hover:bg-gray-400 rounded text-lg cursor-help">É seguro? </button></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="s2" class="seguro text-gray-600 body-font h-screen w-full py-24 mt-24" data-type='s2'>
+  <div class="container px-5 py-10 mx-auto">
+    <div class="flex flex-wrap -mx-4 -mb-10 text-center">
+      <div class="sm:w-1/2 mb-10 px-4">
+        <div class="rounded-lg h-64 overflow-hidden object-center">
+        {% load static %}
+          <img alt="content" class="object-cover object-center h-auto w-auto" src="{% static 'leads/images/django.svg' alt="Django" %}">
+        </div>
+        <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Django</h2>
+        <p class="leading-relaxed text-base">BusuCMR utiliza Django, um framework para Python provado ser um dos mais seguros e escaláveis, ele utiliza de módulos para gerar páginas, então tudo o que você vê neste site, está sendo renderizado no servidor, e não diretamente no navegador.</p>
+        <a href="https://docs.djangoproject.com/en/4.0/" target="_blank"><button class="flex mx-auto mt-6 text-white bg-blue-600 border-0 py-2 px-5 focus:outline-none hover:bg-blue-700 rounded">Saiba mais</button></a>
+      </div>
+      <div class="sm:w-1/2 mb-10 px-4">
+        <div class="rounded-lg h-64 overflow-hidden">
+          <img alt="content" class="object-cover object-center h-auto w-auto" src="{% static 'leads/images/github.svg' alt="Github" %}">
+        </div>
+        <h2 class="title-font text-2xl font-medium text-gray-900 mt-6 mb-3">Github</h2>
+        <p class="leading-relaxed text-base">Todas as modificações de código são opensouce, ou seja, todo o código base da plataforma esta disponível para todos, você pode ajudar a melhorar o código fazendo pull requests, ou apenas fazer um commit, dizendo o que você deseja implementar ou remover.</p>
+        <a href="https://github.com/imtheunix/Marketplace" target="_blank"><button class="flex mx-auto mt-6 text-white bg-blue-600 border-0 py-2 px-5 focus:outline-none hover:bg-blue-700 rounded">Saiba mais</button></a>
+      </div>
+    </div>
+  </div>
+  
+
+  <style>
+    #s2{
+      display: none;
+    }
+  </style>
+  <script>
+    var timeclicked = 1;
+    function seguro(){
+        timeclicked++;
+        if (timeclicked % 2 === 0){
+          $('#s2').css({
+          'display': 'block',
+          });
+      } else {
+        $('#s2').css({
+          'display': 'none',
+          });
+      }
+    };   
+  </script>
+ 
+</section>
+{% endblock content %}

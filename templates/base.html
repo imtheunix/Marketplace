@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" lang="pt-br"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>BusuTBM</title>
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'leads/styles/tailwind.min.css' %}"/>
+        <link rel="shortcut icon" type="image/x-icon" href="{% static 'leads/images/django.svg' %}">
+        <link rel='stylesheet' href='https://izimodal.marcelodolce.com/css/demo.css'><link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.4.2/css/iziModal.min.css"/>
+
+    </head>
+    <body class="h-screen bg-gradient-to-b from-gray-100 to-gray-100">
+        <div id="fundo" class="w-full mx-auto bg-gray-100">
+        {% include "navbar.html" %}
+        {% block content %}
+        {% endblock content %}
+        {% include "footer.html" %}
+        </div>
+        {% include "script.html" %}
+    </body>
+</html>

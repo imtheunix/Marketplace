@@ -1,0 +1,12 @@
+<script>
+document.querySelectorAll('.sec-btn').forEach(function(item) {
+let getBtnData = item.dataset.button;
+item.addEventListener('click', function(e) {
+document.querySelector('[data-type="' + getBtnData + '"]').classList.toggle('visibility')
+})
+})
+
+html {
+  scroll-behavior: smooth;
+}
+</script>
