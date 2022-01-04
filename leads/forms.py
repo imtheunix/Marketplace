@@ -16,6 +16,13 @@ class RobosForm(forms.ModelForm):
             'robopic',
             'preco',
         )
+    def __init__(self, *args, **kwargs):
+        super(RobosForm, self).__init__(*args, **kwargs)
+        self.fields['descricao'].label = "Descrição"
+        self.fields['robocode'].label = "Código (Formatos: .py, .js etc...)"
+        self.fields['robopic'].label = "Imagem do robô"
+        self.fields['preco'].label = "Preço"
+
 
 
 class ProfileForm(UserChangeForm):

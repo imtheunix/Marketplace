@@ -12,13 +12,13 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.4.2/css/iziModal.min.css"/>
 
     </head>
-    <body class="h-screen bg-gradient-to-b from-gray-100 to-gray-100">
-        <div id="fundo" class="w-full mx-auto bg-gray-100">
+    <body>
+        <div id="fundo" class="z-0">
         {% include "navbar.html" %}
         {% block content %}
         {% endblock content %}
-        {% include "footer.html" %}
         </div>
+        {% include "footer.html" %}
         {% include "script.html" %}
     </body>
 </html>

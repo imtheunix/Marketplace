@@ -2,20 +2,97 @@
 {% block content %}
 {% load tailwind_filters %}
 
-
-
-<section class="text-gray-600 body-font relative">
-  <div class="container px-5 py-24 mx-auto">
-    <div class="max-w-lg mx-auto py-2">
+{% load static %}
+<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+<lottie-player class="absolute bg-dunes bg-cover mt-24 py-24 flex justify-end" src="{% static 'leads/images/build.json' %}" speed="1" loop autoplay></lottie-player>
+<section class="relative text-gray-600 body-font mb-8">
+  <div class="relative container px-5 py-24 mb-4 mx-auto">
+    <div class="bg-transparent relative max-w-lg mx-auto py-2">
         <form method="post" enctype="multipart/form-data" class="mt-5">
             {% csrf_token %}
-            {{ form|crispy }}
-            <button type='submit' class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">
+            {% for field in form %}
+                <div class="rounded-md mt-2 bg-gray-100 border-blue-600 border-2 py-4 px-4 bg-opacity-90">
+                    {{ field.label_tag }} {{ field }}
+                </div>
+            {% endfor %}
+            <br>
+            <button type='submit' class="rounded w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 mt-2rounded-md">
                 Confirmar
             </button>
         </form>
+        
+        {% if form.errors %}
+        <div id="erro" class="flex items-center justify-center flex-col" data-izimodal-group="grupo5">
+          <p class="font-semibold">Corrija os seguintes erros:</p><br>
+              {{ form.non_field_errors }}
+              <ul>
+                {% for field in form %}
+                  {% if field.errors %}<li>{{ field.label }}: {{ field.errors|striptags }}</li>{% endif %}
+                {% endfor %}
+              </ul>
+        </div>
+        {% endif %}
     </div>
   </div>
 </section>
 
+<style>
+  input{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+    background-color: white;
+  }
+  
+  input:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 dodgerBlue;
+  }
+
+  textarea{
+    width:100%;
+    border:2px solid #aaa;
+    border-radius:4px;
+    margin:8px 0;
+    outline:none;
+    padding:8px;
+    box-sizing:border-box;
+    transition:.3s;
+    background-color: white;
+    min-height: 200px;
+    max-height: 200px;
+  }
+
+  textarea:focus{
+    border-color:dodgerBlue;
+    box-shadow:0 0 8px 0 rgb dodgerBlue;
+  }
+  lottie-player{
+    width:170%;
+  }
+  
+</style>
+<script>
+
+$("#erro").iziModal({
+   title: "Mensagem",
+   icon: 'icon-chat',
+   headerColor: '#000',
+   attached: 'center',
+   position: 'absolute',
+   overlayColor: 'rgba(255, 255, 255, 0.6)',
+   headerColor: 'rgb(37, 99, 235)',
+   iconColor: 'white',
+   fullscreen: true,
+   width: 700,
+   padding: 20,
+ });
+$('#erro').iziModal('open');
+
+</script>
 {% endblock %}

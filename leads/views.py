@@ -105,6 +105,10 @@ def lead_detail(request, pk):
     cordummy = svgecor.cor
     print(svg)
 
+    if svg == "":
+        svg = svgdummy[random.randrange(0, contador)]
+        cor = cordummy[1]
+
     context = {
         "robos": robos,
         "recom1": recom1,
@@ -130,12 +134,6 @@ def carrinho(request, slug):
         user=request.user,
         ordered=False
     )
-    svg = request.POST.get("svg", "")
-    cor = request.POST.get("cor", "")
-    context = {
-        "svg": svg,
-        "cor": cor
-    }
     order_qs = Carrinho.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
@@ -257,8 +255,13 @@ def gerenciar(request):
     if not request.user.is_authenticated:
         return redirect("../signup")
     robos = Robos.objects.filter(usuario=request.user)
+    svgecor(2==1)
+    svg = svgecor.svg
+    cor = svgecor.cor
     context = {
-        "robos": robos
+        "robos": robos,
+        "svg": svg,
+        "cor": cor
     }
     return render(request, "leads/lead_list.html", context)
 

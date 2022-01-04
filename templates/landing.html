@@ -17,8 +17,8 @@
   </div>
 </section>
 
-<section id="s2" class="seguro text-gray-600 body-font h-screen w-full py-24 mt-24" data-type='s2'>
-  <div class="container px-5 py-10 mx-auto">
+<section id="s2" class="text-gray-600 body-font h-screen w-full py-24 mt-24" data-type='s2'>
+  <div class="container px-5 mx-auto">
     <div class="flex flex-wrap -mx-4 -mb-10 text-center">
       <div class="sm:w-1/2 mb-10 px-4">
         <div class="rounded-lg h-64 overflow-hidden object-center">
@@ -39,28 +39,6 @@
       </div>
     </div>
   </div>
-  
 
-  <style>
-    #s2{
-      display: none;
-    }
-  </style>
-  <script>
-    var timeclicked = 1;
-    function seguro(){
-        timeclicked++;
-        if (timeclicked % 2 === 0){
-          $('#s2').css({
-          'display': 'block',
-          });
-      } else {
-        $('#s2').css({
-          'display': 'none',
-          });
-      }
-    };   
-  </script>
- 
 </section>
 {% endblock content %}

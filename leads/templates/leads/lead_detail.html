@@ -72,7 +72,7 @@
           
           
           {% elif request.user.is_anonymous %}<br><br><br><br>
-          <button class="flex ml-auto text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded" onclick="naologado()">Comprar</button>
+          <button class="logado flex ml-auto text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded" >Comprar</button>
           {% else %}
           <button class="flex ml-auto text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><a href="{{ robos.get_add_to_cart_url }}">Comprar</a></button>
           {% endif %}<br>
@@ -237,18 +237,38 @@
               </svg>
             </a>
           </div>
-
+          <div id="logado" class="flex items-center justify-center flex-col" data-izimodal-group="grupo4">
+            <p>Você deve criar uma conta...</p>
+          </div>
         </div>
       </div>
     </section>
   </div>
 </section>
 <script>
-  function naologado()
-  {
-    alert("Você deve criar uma conta");
-    window.location.href = '/signup';
-  }
+  /*Nao logado*/
+ $("#logado").iziModal({
+   title: "Mensagem",
+   icon: 'icon-chat',
+   headerColor: '#000',
+   attached: 'center',
+   position: 'absolute',
+   overlayColor: 'rgba(255, 255, 255, 0.6)',
+   headerColor: 'rgb(37, 99, 235)',
+   iconColor: 'white',
+   fullscreen: true,
+   width: 700,
+   padding: 20,
+ });
+ $(document).on('click', '.logado', function (event) {
+   event.preventDefault();
+   $('#logado').iziModal('open');
+   $(document).on('click','html', function(event){
+    window.location.href="{% url 'signup' %}";
+   });
+   
+ });
+
   </script>
 {% endblock %}
 
