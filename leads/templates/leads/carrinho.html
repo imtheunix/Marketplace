@@ -135,8 +135,7 @@
                       Ӿ {{ object.get_total }}
                     </div>
                   </div>
-                  
-                <a href="#">
+                <a href="{% url 'leads:pagamento' object.id %}">
                   <button class="flex justify-center w-full px-10 py-3 mt-6 font-medium text-white uppercase bg-blue-600 rounded-full shadow item-center hover:bg-blue-700 focus:shadow-outline focus:outline-none">
                     <svg class="w-12 h-12 mr-20 " viewBox="0 0 1080 1080" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <circle cx="540" cy="540" r="540" fill="white"/>

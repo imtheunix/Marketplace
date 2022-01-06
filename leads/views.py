@@ -15,6 +15,7 @@ from django.core.paginator import Paginator, EmptyPage
 from django.utils import timezone
 import requests
 import random
+import json
 
 class SignupView(generic.CreateView):
     template_name = "registration/signup.html"
@@ -103,7 +104,6 @@ def lead_detail(request, pk):
     svgecor(False)
     svgdummy = svgecor.svg
     cordummy = svgecor.cor
-    print(svg)
 
     if svg == "":
         svg = svgdummy[random.randrange(0, contador)]
@@ -127,13 +127,12 @@ def lead_detail(request, pk):
 
 
 def carrinho(request, slug):
-
     item = get_object_or_404(Robos, slug=slug)
     order_item, created = OrderItem.objects.get_or_create(
         item=item,
         user=request.user,
         ordered=False
-    )
+    )   
     order_qs = Carrinho.objects.filter(user=request.user, ordered=False)
     if order_qs.exists():
         order = order_qs[0]
@@ -175,9 +174,9 @@ def remove_single_item_from_cart(request, slug):
                 order_item.quantidade -= 1
                 order_item.save()
             else:
-                order.items.remove(order_item)
-            messages.info(request, "Item atualizado")
-            return redirect("leads:order-summary")
+                order_item.delete()
+                messages.info(request, "Você está sem itens no carrinho")
+                return redirect("leads/lead_list")
         else:
             messages.info(request, "Isso não estava no seu carrinho")
             return redirect("leads/lead_list.html")
@@ -230,17 +229,21 @@ class Pagamento(LoginRequiredMixin, View):
    def get(self, *args, **kwargs):
         try:
             order = Carrinho.objects.get(user=self.request.user, ordered=False)
-            total_str = str(order.get_total())
-            total_raw = s = total_str; raw_s = r'{0}'.format(s)
-            print(total_raw)
-            data = {"callback": "leads/pagamento", "amount": "1000000000000000000000000000000"}
+            total_limpo = order.get_total()
+            format_total = str(total_limpo).replace(',', '')
+            total_nraw = str(format_total).replace('.', '')
+            print(total_limpo)
+            data = {"callback": f"http://127.0.0.1:8000/leads/pagamento/{order.id}","amount": total_limpo}
+            headers = {"Content-Type": "application/json"}
             url = "http://127.0.0.1:13380/sales"
-            response = requests.post(url, data)
-            print(response)
-
+            response = requests.post(url, headers=headers, json=data)
+            body = response.json()
+            qr = body.get('url')
             context = {
-                'valor': total_raw
+                'valor': total_limpo,
+                'qr': qr,
             }
+
             return render(self.request, 'leads/pagamento.html', context)
 
         except ObjectDoesNotExist:

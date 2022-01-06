@@ -25,7 +25,7 @@ urlpatterns = [
     path('<int:pk>/update/', lead_update, name='perfil-update'),
     path('<int:pk>/updaterob/', robo_update, name='robo-update'),
     path('<int:pk>/perfil/', PerfilDetailView.as_view(), name='perfil-detail'),
-    path('pagamento/', Pagamento.as_view(), name='pagamento'),
+    path('pagamento/<int:pk>', Pagamento.as_view(), name='pagamento'),
 
 ]
 

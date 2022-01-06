@@ -1,1 +1,24 @@
-{% extends "base.html" %} {% block content %} {% endblock content %}
+{% extends "base.html" %} {% block content %} 
+
+<section class="text-gray-600 body-font">
+  <div class="container mx-auto flex flex-col px-5 py-24 justify-center items-center" bis_skin_checked="1">
+    <img id='barcode' 
+    src="https://api.qrserver.com/v1/create-qr-code/?data={{ qr }}&amp;size=200x200" 
+    alt="" 
+    title="HELLO" 
+    width="200" 
+    height="200" />
+    <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center" bis_skin_checked="1">
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Escaneie o QR para pagar Ӿ{{ valor }}</h1>
+      <p class="mb-8 leading-relaxed">Ou pague usando este código:</p>
+
+      <p class="text-sm mt-1 text-gray-500 w-full">Você será redirecionado assim que o pagamento for processado...</p>
+      <p class="text-sm mt-2 text-gray-500 w-full">(Confirme o valor antes de efetuar o pagamento.)</p>
+    </div>
+  </div>
+</section>
+
+
+
+
+{% endblock content %}
