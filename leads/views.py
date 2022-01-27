@@ -77,6 +77,10 @@ def lead_detail(request, pk):
             for x in i.items.all():
                 if x.item == robos:
                     order = True
+                else:
+                    order = False
+        else:
+            order = False
 
     contador = Robos.objects.all().count()
     i = 1
