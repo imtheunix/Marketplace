@@ -64,18 +64,20 @@
           {% else %}
           <p class="title-font font-small text-2xl text-gray-900 ml-2">Não definido.</p>
           {% endif %}
-        {% if request.user == robos.usuario %}<br><br><br>
-          
-          <button class="flex ml-auto text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><a href="{% url 'leads:robo-update' robos.pk %}">Editar</a></button>
-        </div>
-        <div class="justify-self-auto">
-          
-          
+
+          {% if request.user == robos.usuario  %}<br><br><br>
+          <button class="flex ml-auto text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded items-center"><a href="{% url 'leads:robo-update' robos.pk %}">Editar</a></button>
+          </div>
+          <div class="justify-self-auto">
           {% elif request.user.is_anonymous %}<br><br><br><br>
-          <button class="logado flex ml-auto text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded" >Comprar</button>
+          <button class="logado flex ml-auto text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded" >Comprar</button>
+          {% elif order == True %}
+          <button class="codigo flex ml-auto text-white bg-green-500 border-0 py-3 px-6 focus:outline-none hover:bg-green-600 rounded"><a href="#codigo">Ver código</a></button>
           {% else %}
-          <button class="flex ml-auto text-white bg-indigo-500 border-0 py-3 px-6 focus:outline-none hover:bg-indigo-600 rounded"><a href="{{ robos.get_add_to_cart_url }}">Comprar</a></button>
+          <button class="flex ml-auto text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded"><a href="{{ robos.get_add_to_cart_url }}">Comprar</a></button>
           {% endif %}<br>
+          
+          
           
         </div>
       </div>
@@ -110,7 +112,7 @@
             
             <h2 class="text-xl font-medium title-font text-gray-900 mt-5">{{ recom1.nome }}</h2>
             <p class="text-base leading-relaxed mt-2">{{ recom1.descricao|slice:":30" }}...</p>
-            <a href="javascript:$('#6').submit()" class="text-indigo-500 inline-flex items-center mt-3">Sobre
+            <a href="javascript:$('#1').submit()" class="text-indigo-500 inline-flex items-center mt-3">Sobre
               <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-2" viewBox="0 0 24 24">
                 <path d="M5 12h14M12 5l7 7-7 7"></path>
               </svg>
@@ -242,6 +244,11 @@
           </div>
         </div>
       </div>
+
+      <div id="codigo" class="flex items-center justify-center flex-col" data-izimodal-group="grupo3">
+        <p>{{ robos.robocode }}</p>
+      </div>
+
     </section>
   </div>
 </section>
@@ -267,6 +274,25 @@
     window.location.href="{% url 'signup' %}";
    });
    
+ });
+
+ /* Código */
+ $("#codigo").iziModal({
+   title: "Código do {{ robos.nome }}",
+   icon: 'icon-chat',
+   headerColor: '#000',
+   attached: 'center',
+   position: 'absolute',
+   overlayColor: 'rgba(255, 255, 255, 0.6)',
+   headerColor: 'rgb(37, 99, 235)',
+   iconColor: 'white',
+   fullscreen: true,
+   width: 700,
+   padding: 20,
+ });
+ $(document).on('click', '.codigo', function (event) {
+   event.preventDefault();
+   $('#codigo').iziModal('open');
  });
 
   </script>

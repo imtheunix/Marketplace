@@ -26,7 +26,7 @@ urlpatterns = [
     path('<int:pk>/updaterob/', robo_update, name='robo-update'),
     path('<int:pk>/perfil/', PerfilDetailView.as_view(), name='perfil-detail'),
     path('pagamento/<int:pk>', Pagamento.as_view(), name='pagamento'),
-
+    
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

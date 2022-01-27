@@ -24,7 +24,7 @@ class Robos(models.Model):
     nome = models.CharField(max_length=20)
     descricao = models.TextField(max_length=150)
     reviews = models.IntegerField(null=True, blank=True)
-    robocode = models.FileField(null=True, blank=True, upload_to="codigo")
+    robocode = models.TextField(max_length=1000, null=True, blank=True)
     robopic = models.ImageField(
         null=True,
         blank=True,

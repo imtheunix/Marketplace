@@ -71,6 +71,13 @@ def robos_list(request):
 
 def lead_detail(request, pk):
     robos = Robos.objects.get(id=pk)
+    order_qs = Carrinho.objects.filter(user=request.user)
+    for i in order_qs:
+        if i.ordered == True:
+            for x in i.items.all():
+                if x.item == robos:
+                    order = True
+
     contador = Robos.objects.all().count()
     i = 1
 
@@ -111,6 +118,7 @@ def lead_detail(request, pk):
 
     context = {
         "robos": robos,
+        "order": order,
         "recom1": recom1,
         "recom2": recom2,
         "recom3": recom3,
@@ -138,9 +146,8 @@ def carrinho(request, slug):
         order = order_qs[0]
 
         if order.items.filter(item__slug=item.slug).exists():
-            order_item.quantidade += 1
+            order_item.quantidade += 0
             order_item.save()
-            messages.info(request, "Carrinho atualizado.")
             return redirect("leads:order-summary")
         else:
             order.items.add(order_item)
@@ -216,6 +223,7 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Carrinho.objects.get(user=self.request.user, ordered=False)
+            print(order.ordered)
             context = {
                 'object': order
             }
@@ -228,23 +236,46 @@ class OrderSummaryView(LoginRequiredMixin, View):
 class Pagamento(LoginRequiredMixin, View):
    def get(self, *args, **kwargs):
         try:
+            '''
             order = Carrinho.objects.get(user=self.request.user, ordered=False)
+            order_id = order.id
+            print(order_id)
             total_limpo = order.get_total()
-            format_total = str(total_limpo).replace(',', '')
-            total_nraw = str(format_total).replace('.', '')
-            print(total_limpo)
-            data = {"callback": f"http://127.0.0.1:8000/leads/pagamento/{order.id}","amount": total_limpo}
+            total_nraw = f'{total_limpo:.30f}'
+            print(total_nraw)
+            data = {"callback": f"http://127.0.0.1:8000/leads/pagamento/{order.id}","amount": total_nraw}
             headers = {"Content-Type": "application/json"}
             url = "http://127.0.0.1:13380/sales"
-            response = requests.post(url, headers=headers, json=data)
+            response = requests.post(url, headers=headers, json=data) 
             body = response.json()
             qr = body.get('url')
+            print(qr)
+            pago = body.get('paid')
+            print(pago)
             context = {
                 'valor': total_limpo,
+                'pago': pago,
                 'qr': qr,
-            }
+                'order': order_id
+            } 
 
             return render(self.request, 'leads/pagamento.html', context)
+            '''
+            
+            order = Carrinho.objects.get(user=self.request.user, ordered=False)
+            for orders in order.items.all():
+                orders.ordered = True
+                print(orders.ordered)
+            order.ordered = True
+            order.save()
+            context = {
+                'qr': 'teste',
+                'pago': 'Está pago (Funcionalidade não ativa nesse site).'
+            }
+            return render(self.request, 'leads/pagamento.html', context)
+
+            return redirect("../../leads/mercado/")
+            
 
         except ObjectDoesNotExist:
             messages.warning(
