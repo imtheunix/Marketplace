@@ -71,16 +71,19 @@ def robos_list(request):
 
 def lead_detail(request, pk):
     robos = Robos.objects.get(id=pk)
-    order_qs = Carrinho.objects.filter(user=request.user)
-    for i in order_qs:
-        if i.ordered == True:
-            for x in i.items.all():
-                if x.item == robos:
-                    order = True
-                else:
-                    order = False
-        else:
-            order = False
+    if request.user.is_authenticated:
+        order_qs = Carrinho.objects.filter(user=request.user)
+        for i in order_qs:
+            if i.ordered == True:
+                for x in i.items.all():
+                    if x.item == robos:
+                        order = True
+                    else:
+                        order = False
+            else:
+                order = False
+    else:
+        order = False
 
     contador = Robos.objects.all().count()
     i = 1
@@ -227,10 +230,18 @@ class OrderSummaryView(LoginRequiredMixin, View):
     def get(self, *args, **kwargs):
         try:
             order = Carrinho.objects.get(user=self.request.user, ordered=False)
-            print(order.ordered)
             context = {
                 'object': order
             }
+            thereisobject = Carrinho.objects.filter(user=self.request.user, ordered=False)
+            for i in thereisobject:
+                if i.ordered == False:
+                    if len(i.items.all()) < 1:
+                        messages.warning(
+                            self.request, "Você não tem nenhum item no carrinho.")
+                        return redirect("../../leads/mercado/")
+          
+
             return render(self.request, 'leads/carrinho.html', context)
         except ObjectDoesNotExist:
             messages.warning(
@@ -269,7 +280,6 @@ class Pagamento(LoginRequiredMixin, View):
             order = Carrinho.objects.get(user=self.request.user, ordered=False)
             for orders in order.items.all():
                 orders.ordered = True
-                print(orders.ordered)
             order.ordered = True
             order.save()
             context = {

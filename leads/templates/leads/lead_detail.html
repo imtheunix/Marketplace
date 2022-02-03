@@ -64,17 +64,17 @@
           {% else %}
           <p class="title-font font-small text-2xl text-gray-900 ml-2">Não definido.</p>
           {% endif %}
-
+          </div>
           {% if request.user == robos.usuario  %}<br><br><br>
           <button class="flex ml-auto text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded items-center"><a href="{% url 'leads:robo-update' robos.pk %}">Editar</a></button>
-          </div>
+          
           <div class="justify-self-auto">
           {% elif request.user.is_anonymous %}<br><br><br><br>
-          <button class="logado flex ml-auto text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded" >Comprar</button>
+          <button class="logado flex ml-auto text-white bg-green-500 border-0 py-3 px-6 focus:outline-none hover:bg-green-600 rounded"><a>Comprar</a></button>
           {% elif order == True %}
           <button class="codigo flex ml-auto text-white bg-green-500 border-0 py-3 px-6 focus:outline-none hover:bg-green-600 rounded"><a href="#codigo">Ver código</a></button>
           {% else %}
-          <button class="flex ml-auto text-white bg-blue-500 border-0 py-3 px-6 focus:outline-none hover:bg-blue-600 rounded"><a href="{{ robos.get_add_to_cart_url }}">Comprar</a></button>
+          <button class="flex ml-auto text-white bg-green-500 border-0 py-3 px-6 focus:outline-none hover:bg-green-600 rounded"><a href="{{ robos.get_add_to_cart_url }}">Comprar</a></button>
           {% endif %}<br>
           
           
