@@ -7,6 +7,7 @@ from django.views import generic
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.views.generic.base import View
 from .models import Carrinho, OrderItem, Robos, User
+from django.db.models import F
 from .forms import RobosForm, CustomUserCreationForm, ProfileForm
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -16,6 +17,7 @@ from django.utils import timezone
 import requests
 import random
 import json
+import datetime
 
 class SignupView(generic.CreateView):
     template_name = "registration/signup.html"
@@ -26,6 +28,7 @@ class SignupView(generic.CreateView):
 
 
 class LandingPageView(TemplateView):
+   
     template_name = "landing.html"
 
 def svgecor(retorno):
